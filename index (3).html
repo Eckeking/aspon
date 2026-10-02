@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>aspon.com</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#0a0a0f;--card:#17171f;--ink:#f6f4ee;--mute:#a7a7b8;--line:#2e2e3b;--pink:#ff1f2d;--lime:#c6ff3d;--blue:#3d7bff;--yellow:#ffd23d;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 85% -10%,#3a0a10 0,transparent 45%),radial-gradient(circle at -10% 20%,#0f2a55 0,transparent 40%),var(--bg);background-attachment:fixed;color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.45}
+main{max-width:980px;margin:0 auto;padding:28px 16px 56px}
+h1{font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;font-size:clamp(3rem,13vw,6rem);line-height:1;margin:6px 0 16px;letter-spacing:-.02em;display:inline-block;background:#ff1f2d;color:#000;padding:6px 22px 10px;border-radius:14px}
+h1 span{display:inline-block;transform:rotate(-4deg);font-size:.4em;background:var(--yellow);color:#0a0a0f;text-shadow:none;padding:4px 10px;border-radius:8px;vertical-align:top;margin-left:6px}
+h2{font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;font-size:clamp(1.6rem,5vw,2.4rem);margin:6px 0 6px;color:var(--lime);text-shadow:3px 3px 0 var(--pink);word-break:break-word}
+.sub{color:var(--mute);margin:0 0 22px;max-width:52ch;font-size:1.05rem}
+.panel{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:16px;box-shadow:7px 7px 0 var(--blue)}
+label,.lbl{font-weight:700;font-size:.95rem}
+input[type=text],input[type=number]{width:100%;padding:13px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+input::placeholder{color:#6f6f82}
+input:focus{border-color:#fff}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>div{flex:1 1 130px}
+.sw{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.sw button{width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);cursor:pointer;padding:0;transition:transform .12s}
+.sw button:hover{transform:scale(1.15) rotate(-6deg)}
+.sw button[aria-pressed=true]{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--lime)}
+.sw .any{width:auto;border-radius:20px;padding:0 14px;background:var(--bg);color:var(--ink);font:inherit;font-size:.85rem;font-weight:700}
+.go{cursor:pointer;font:inherit;font-weight:700;font-size:1.25rem;background:var(--pink);color:#fff;border:2px solid var(--ink);padding:16px;border-radius:12px;box-shadow:5px 5px 0 var(--ink);transition:transform .1s,box-shadow .1s}
+.go:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.go:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink)}
+#search{background:#fff;color:#000}
+.alt{background:var(--yellow);color:#0a0a0f;font-size:.95rem;padding:11px 16px}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:18px}
+.links a{display:block;background:var(--card);color:var(--ink);border:2px solid var(--ink);border-left:10px solid #fff;padding:14px;border-radius:10px;text-decoration:none;font-weight:700;transition:transform .12s,box-shadow .12s}
+.links a{--c:#fff}
+.links a small{display:block;color:var(--mute);font-weight:400;font-size:.8rem}
+.links a:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:5px 5px 0 var(--c)}
+.bar{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.hide{display:none}
+.note,.hint{color:var(--mute);font-size:.85rem;max-width:70ch}
+.note{margin-top:32px}
+#err{color:var(--yellow);font-weight:700}
+textarea{width:100%;min-height:120px;margin-top:10px;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-size:.8rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+
+<section id="home">
+  <h1>aspon</h1>
+  <p class="sub">Type what you want, set a price and a color, then press Search. You get links straight to the stores.</p>
+  <div class="panel">
+    <div><label for="q">What are you looking for?</label>
+    <input id="q" type="text" placeholder="hoodie, sneakers, headphones…" autocomplete="off"></div>
+    <div class="row">
+      <div><label for="min">Lowest price ($)</label><input id="min" type="number" min="0" placeholder="0"></div>
+      <div><label for="max">Highest price ($)</label><input id="max" type="number" min="0" placeholder="100"></div>
+    </div>
+    <div><span class="lbl">Color</span><div class="sw" id="sw" role="group" aria-label="Color"></div></div>
+    <button class="go" id="search" type="button">Search</button>
+    <p class="hint" id="err" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="results" class="hide">
+  <h2 id="title"></h2>
+  <p class="hint" id="info"></p>
+  <div class="bar">
+    <button class="go alt" id="back" type="button">New search</button>
+    <button class="go alt" id="copy" type="button">Copy all links</button>
+  </div>
+  <div class="links" id="links"></div>
+  <p class="hint" id="msg" aria-live="polite"></p>
+  <textarea id="list" class="hide" readonly aria-label="All links"></textarea>
+</section>
+
+<p class="note">aspon doesn't sell anything and doesn't show prices itself. Each link opens the store's own search in a new tab, and you see the real price there. Ask a parent or guardian before buying anything.</p>
+</main>
+
+<script>
+var COLORS={black:"#1c1c1c",white:"#f1f1f1",blue:"#2f6bff",navy:"#1b2a52",red:"#d6342c",green:"#2e8b57",grey:"#8a929b",pink:"#ef7fb0",yellow:"#f2c230",brown:"#7a5230"};
+function P(lo,hi,a,b){var s="";if(lo!=="")s+="&"+a+"="+lo;if(hi!=="")s+="&"+b+"="+hi;return s}
+var STORES=[
+["Amazon","amazon.com","https://www.amazon.com/s?k=",function(l,h){return P(l,h,"low-price","high-price")}],
+["eBay","ebay.com","https://www.ebay.com/sch/i.html?_nkw=",function(l,h){return P(l,h,"_udlo","_udhi")}],
+["Walmart","walmart.com","https://www.walmart.com/search?q=",function(l,h){return P(l,h,"min_price","max_price")}],
+["Etsy","etsy.com","https://www.etsy.com/search?q=",function(l,h){return P(l,h,"min","max")}],
+["AliExpress","aliexpress.com","https://www.aliexpress.com/wholesale?SearchText=",function(l,h){return P(l,h,"minPrice","maxPrice")}],
+["Target","target.com","https://www.target.com/s?searchTerm="],
+["Best Buy","bestbuy.com","https://www.bestbuy.com/site/searchpage.jsp?st="],
+["Newegg","newegg.com","https://www.newegg.com/p/pl?d="],
+["GameStop","gamestop.com","https://www.gamestop.com/search/?q="],
+["Costco","costco.com","https://www.costco.com/CatalogSearch?keyword="],
+["Lowe's","lowes.com","https://www.lowes.com/search?searchTerm="],
+["Wayfair","wayfair.com","https://www.wayfair.com/keyword.php?keyword="],
+["IKEA","ikea.com","https://www.ikea.com/us/en/search/?q="],
+["Ralph Lauren","ralphlauren.com","https://www.ralphlauren.com/search?q="],
+["Nike","nike.com","https://www.nike.com/w?q="],
+["Adidas","adidas.com","https://www.adidas.com/us/search?q="],
+["Zara","zara.com","https://www.zara.com/us/en/search?searchTerm="],
+["H&M","hm.com","https://www2.hm.com/en_us/search-results.html?q="],
+["ASOS","asos.com","https://www.asos.com/us/search/?q="],
+["Uniqlo","uniqlo.com","https://www.uniqlo.com/us/en/search?q="],
+["Gap","gap.com","https://www.gap.com/browse/search.do?searchText="],
+["Old Navy","oldnavy.gap.com","https://oldnavy.gap.com/browse/search.do?searchText="],
+["Nordstrom","nordstrom.com","https://www.nordstrom.com/sr?keyword="],
+["Kohl's","kohls.com","https://www.kohls.com/search.jsp?search="],
+["Foot Locker","footlocker.com","https://www.footlocker.com/search?query="],
+["Dick's Sporting Goods","dickssportinggoods.com","https://www.dickssportinggoods.com/search/SearchDisplay?searchTerm="],
+["REI","rei.com","https://www.rei.com/search?q="],
+["StockX","stockx.com","https://stockx.com/search?s="],
+["GOAT","goat.com","https://www.goat.com/search?query="],
+["Poshmark","poshmark.com","https://poshmark.com/search?query="],
+["Mercari","mercari.com","https://www.mercari.com/search/?keyword="],
+["Depop","depop.com","https://www.depop.com/search/?q="],
+["Temu","temu.com","https://www.temu.com/search_result.html?search_key="],
+["Samsung","samsung.com","https://www.samsung.com/us/search/searchMain/?listType=g&searchTerm="],
+["Sephora","sephora.com","https://www.sephora.com/search?keyword="],
+["LEGO","lego.com","https://www.lego.com/en-us/search?q="],
+["Chewy","chewy.com","https://www.chewy.com/s?query="]
+];
+var color="",LINKS=[];
+var $=function(i){return document.getElementById(i)};
+function mk(label,val){
+ var b=document.createElement("button");b.type="button";b.setAttribute("aria-label",label);b.setAttribute("aria-pressed",val===color);
+ if(val){b.style.background=COLORS[val];b.title=label}else{b.className="any";b.textContent="Any color"}
+ b.onclick=function(){color=val;swatches()};return b}
+function swatches(){var sw=$("sw");sw.innerHTML="";sw.appendChild(mk("Any color",""));Object.keys(COLORS).forEach(function(c){sw.appendChild(mk(c,c))})}
+
+function search(){
+ var item=$("q").value.trim();
+ if(!item){$("err").textContent="Type what you want to find first.";$("q").focus();return}
+ $("err").textContent="";
+ var lo=$("min").value.trim(),hi=$("max").value.trim(),t=encodeURIComponent((color+" "+item).trim());
+ var box=$("links");box.innerHTML="";LINKS=[];var n=0;
+ STORES.forEach(function(s){
+  var ps=(s[3]&&(lo!==""||hi!==""))?s[3](lo,hi):"";if(ps)n++;
+  var url=s[2]+t+ps;LINKS.push(s[0]+": "+url);
+  var a=document.createElement("a");a.href=url;a.target="_blank";a.rel="noopener noreferrer";
+  a.innerHTML=s[0]+"<small>"+(ps?"price filter applied":s[1])+"</small>";box.appendChild(a)});
+ $("title").textContent=(color?color+" ":"")+item;
+ var pr=(lo!==""||hi!=="")?("Price: $"+(lo||"0")+" to "+(hi?"$"+hi:"any")+". "):"";
+ $("info").textContent=pr+STORES.length+" stores. "+(pr?n+" apply your price automatically; in the others, set the price on the store's page.":"");
+ $("list").value=LINKS.join("\n");$("list").className="hide";$("msg").textContent="";
+ $("home").className="hide";$("results").className="";window.scrollTo(0,0);
+}
+$("search").onclick=search;
+$("q").addEventListener("keydown",function(e){if(e.key==="Enter")search()});
+$("back").onclick=function(){$("results").className="hide";$("home").className="";window.scrollTo(0,0)};
+$("copy").onclick=function(){var l=$("list");l.className="";l.select();
+ try{navigator.clipboard.writeText(l.value);$("msg").textContent="Links copied."}catch(e){$("msg").textContent="Select the text below and copy it."}};
+swatches();
+</script>
+</body>
+</html>
